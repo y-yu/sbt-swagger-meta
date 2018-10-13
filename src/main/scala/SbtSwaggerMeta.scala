@@ -6,10 +6,11 @@ import org.clapper.classutil.ClassFinder
 import sbt.internal.PluginManagement.PluginClassLoader
 import sbt._
 import Keys._
+import sbt.internal.inc.classpath.ClasspathUtilities
 import swagger.meta.Versions
 import collection.JavaConverters._
 
-object SwaggerMeta extends AutoPlugin {
+object SbtSwaggerMeta extends AutoPlugin {
   case class SwaggerInfo(
     version: String,
     title: String,
@@ -27,29 +28,17 @@ object SwaggerMeta extends AutoPlugin {
   }
 
   object autoImport {
-    lazy val swaggerMeta = TaskKey[File]("swaggerMeta", "generates YAML/JSON files for swagger")
+    lazy val swaggerMeta = TaskKey[Unit]("swagger-meta", "Generates YAML/JSON files for swagger.")
 
-    val swaggerTarget = SettingKey[File]("outputTarget", "target directory that YAML/JSON files would be generated to")
+    val swaggerTarget = SettingKey[File]("output-target", "Target directory that YAML/JSON files would be generated to.")
 
-    val swaggerBasePath = SettingKey[String](
-      "basePath",
-      "The base path on which the API is served, which is relative to the host. If it is not included, the API is served directly under the host. The value MUST start with a leading slash (/). The basePath does not support path templating."
-    )
+    val swaggerBasePath = SettingKey[String]("base-path", "Base path where the API is served.")
 
-    val swaggerOutputFileType = SettingKey[SwaggerOutputFileType](
-      "outputFileType",
-      "output file type which is JSON or YAML"
-    )
+    val swaggerOutputFileType = SettingKey[SwaggerOutputFileType]("output-file-type", "Output file type which is JSON or YAML")
 
-    val swaggerTargetClasspath = SettingKey[String](
-      "targetClasspath",
-      "target classpath to generate swagger output"
-    )
+    val swaggerTargetClasspath = SettingKey[String]("target-classpath", "Target classpath to generate swagger output as a Regex.")
 
-    val swaggerInformation = SettingKey[SwaggerInfo](
-      "swaggerInformation",
-      "swagger information to initialze"
-    )
+    val swaggerInformation = SettingKey[SwaggerInfo]("swagger-information", "Swagger information to initialize")
   }
 
   import autoImport._
@@ -75,25 +64,22 @@ object SwaggerMeta extends AutoPlugin {
     swaggerMeta := swaggerMetaTask.dependsOn(compile in Compile).value
   )
 
-  lazy val swaggerMetaTask: Def.Initialize[Task[File]] = Def.task {
+  lazy val swaggerMetaTask: Def.Initialize[Task[Unit]] = Def.task {
     val fullClasspath = (sbt.Keys.fullClasspath in Compile).value
     val classDirectory = (sbt.Keys.classDirectory in Compile).value
     val targetClassPath = (swaggerTargetClasspath in Compile).value
     val targetFile = (swaggerTarget in Compile).value
     val outputFileType = (swaggerOutputFileType in Compile).value
     val swaggerInfo = (swaggerInformation in Compile).value
+    val scalaInstanceInCompile = (scalaInstance in Compile).value
     val log = sbt.Keys.streams.value.log
 
-    val pluginClassLoader = classOf[Api].getClassLoader.asInstanceOf[PluginClassLoader]
+    val mainClassLoader = ClasspathUtilities.makeLoader(fullClasspath.map(_.data), classOf[Api].getClassLoader, scalaInstanceInCompile)
+    val pluginClassLoader = new PluginClassLoader(mainClassLoader)
 
     pluginClassLoader.add(fullClasspath.files.map(_.toURI.toURL))
 
-    log.info(s"== sbt-swagger-meta ==> looking for compiled project classes in: ${classDirectory.toURI.toURL}")
-
-    ClassFinder(Seq(classDirectory)).classpath.foreach {
-      f =>
-        log.info(s"aaaaaa => ${if (f.isFile) IO.read(f) else "dir"}")
-    }
+    log.info(s"== sbt-swagger-meta ==> Looking for compiled project classes in: ${classDirectory.toURI.toURL}")
 
     val projectClassInfos = ClassFinder(Seq(classDirectory)).getClasses().filter {
       classInfo =>
@@ -107,7 +93,7 @@ object SwaggerMeta extends AutoPlugin {
         Class.forName(classInfo.name, false, pluginClassLoader)
     }
 
-    log.info(s"== sbt-swagger-meta ==> loaded ${projectClasses.mkString(",")} project classes")
+    log.info(s"== sbt-swagger-meta ==> Loaded project classes: ${projectClasses.mkString(",")}")
 
     val info = new Info()
     info.setTitle(swaggerInfo.title)
@@ -124,7 +110,6 @@ object SwaggerMeta extends AutoPlugin {
 
     IO.write(targetFile, body)
 
-    log.info(s"== sbt-swagger-meta ==> generated swagger file to ${targetFile.getPath}")
-    targetFile
+    log.info(s"== sbt-swagger-meta ==> Generated swagger file to ${targetFile.getPath}")
   }
 }

@@ -1,9 +1,9 @@
 import io.swagger.annotations._
 import javax.ws.rs._
 
-@Path("/api-v1aaaaaa")
+@Path("/api")
 @Api(
-  value = "api-",
+  value = "api",
   authorizations = Array(
     new Authorization(value = "JWT"),
     new Authorization(value = "Bearer")

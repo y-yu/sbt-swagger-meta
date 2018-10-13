@@ -30,6 +30,6 @@ object UserEndpoints {
 sealed trait Response
 object Response {
   case class User(email: String) extends Response
-  case class BadRequst(msg: String) extends Response
+  case class BadRequest(msg: String) extends Response
   case class NotFound(msg: String) extends Response
 }
