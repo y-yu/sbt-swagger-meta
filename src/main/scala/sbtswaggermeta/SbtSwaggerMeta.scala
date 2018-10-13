@@ -1,14 +1,16 @@
+package sbtswaggermeta
+
 import io.swagger.annotations.Api
 import io.swagger.jaxrs.Reader
 import io.swagger.models.{Info, Swagger}
 import io.swagger.util.{Json => UtilJson, Yaml => UtilYaml}
 import org.clapper.classutil.ClassFinder
-import sbt.internal.PluginManagement.PluginClassLoader
+import sbt.Keys._
 import sbt._
-import Keys._
+import sbt.internal.PluginManagement.PluginClassLoader
 import sbt.internal.inc.classpath.ClasspathUtilities
 import swagger.meta.Versions
-import collection.JavaConverters._
+import scala.collection.JavaConverters._
 
 object SbtSwaggerMeta extends AutoPlugin {
   case class SwaggerInfo(
@@ -21,7 +23,7 @@ object SbtSwaggerMeta extends AutoPlugin {
     val ext: String
   }
   case object Yaml extends SwaggerOutputFileType {
-    val ext: String = "yaml"
+    val ext: String = "yml"
   }
   case object Json extends SwaggerOutputFileType {
     val ext: String = "json"
@@ -79,7 +81,7 @@ object SbtSwaggerMeta extends AutoPlugin {
 
     pluginClassLoader.add(fullClasspath.files.map(_.toURI.toURL))
 
-    log.info(s"== sbt-swagger-meta ==> Looking for compiled project classes in: ${classDirectory.toURI.toURL}")
+    log.info(s"== sbt-swagger-meta ==> Looking for compiled classes in: ${classDirectory.toURI.toURL}")
 
     val projectClassInfos = ClassFinder(Seq(classDirectory)).getClasses().filter {
       classInfo =>
@@ -93,7 +95,7 @@ object SbtSwaggerMeta extends AutoPlugin {
         Class.forName(classInfo.name, false, pluginClassLoader)
     }
 
-    log.info(s"== sbt-swagger-meta ==> Loaded project classes: ${projectClasses.mkString(",")}")
+    log.info(s"== sbt-swagger-meta ==> Loaded classes: ${projectClasses.mkString(",")}")
 
     val info = new Info()
     info.setTitle(swaggerInfo.title)
@@ -110,6 +112,6 @@ object SbtSwaggerMeta extends AutoPlugin {
 
     IO.write(targetFile, body)
 
-    log.info(s"== sbt-swagger-meta ==> Generated swagger file to ${targetFile.getPath}")
+    log.info(s"== sbt-swagger-meta ==> Generated a swagger file: ${targetFile.getPath}")
   }
 }

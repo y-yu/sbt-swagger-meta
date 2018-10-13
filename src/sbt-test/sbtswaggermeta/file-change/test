@@ -1,0 +1,13 @@
+> swaggerMeta
+
+$ exists target/swagger.yml
+
+$ copy-file target/swagger.yml target/swagger.yml.old
+
+$ copy-file change/Main.scala src/main/scala/Main.scala
+
+> swaggerMeta
+
+$ exists target/swagger.yml
+
+-$ must-mirror target/swagger.yml target/swagger.yml.old

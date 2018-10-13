@@ -1,0 +1,26 @@
+language: scala
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.ivy2/cache
+    - $HOME/.sbt/boot
+    - $HOME/.sbt/launchers
+
+scala:
+  - 2.12.7
+
+jdk: oraclejdk8
+
+script:
+  - sbt scripted publishLocal
+  # Check that the example can be compiled.
+  - cd example
+  - sbt swaggerMeta
+  - cat target/swagger.yml
+
+before_cache:
+  - find $HOME/.sbt -name "*.lock" | xargs rm
+  - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
+

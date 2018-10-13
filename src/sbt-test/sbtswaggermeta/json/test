@@ -1,0 +1,3 @@
+> swaggerMeta
+
+$ exists target/swagger.json

@@ -10,11 +10,11 @@ import javax.ws.rs._
   )
 )
 @Produces(Array("application/json"))
-object Playground {
+object Main {
   @GET @Path("")
   @ApiOperation(
     value = "Get the key with the supplied key ID.",
-    response = classOf[Response.User])
+    response = classOf[String])
   @Produces(Array("application/json"))
   def f(): String = "abcdeefg"
 }
