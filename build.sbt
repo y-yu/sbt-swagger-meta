@@ -4,7 +4,8 @@ lazy val root = (project in file(".")).
     publishMavenStyle := true,
     organization := "com.github.y-yu",
     name := "sbt-swagger-meta",
-    // bintrayが`-SNAPSHOT`というバージョンを許してくれないので、やむを得ず`_SNAPSHOT`としている
+    // Bintray cannot allow a version which has `-SNAPSHOT` as its postfix,
+    // so the postfix of this is `_SNAPSHOT` for now.
     version := "0.1.0_SNAPSHOT",
     scalaVersion := "2.12.7",
     libraryDependencies ++= Seq(
@@ -20,6 +21,6 @@ lazy val root = (project in file(".")).
     publishArtifact in Test := false,
     bintrayVcsUrl := Some("git@github.com:y-yu/sbt-swagger-meta.git"),
     bintrayPackage := name.value,
-    licenses := Seq("MIT" -> url(s"https://opensource.org/licenses/MIT")),
+    licenses := Seq("MIT" -> url(s"https://github.com/y-yu/sbt-swagger-meta/LICENCE")),
   ).
   enablePlugins(SbtPlugin)
