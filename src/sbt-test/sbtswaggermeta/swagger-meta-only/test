@@ -7,3 +7,5 @@ $ exists target/swagger.yml
 > swaggerMetaOnly .*
 
 -> check
+
+-> swaggerMetaOnly
