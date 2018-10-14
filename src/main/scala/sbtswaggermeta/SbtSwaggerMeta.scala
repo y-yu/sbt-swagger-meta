@@ -11,7 +11,6 @@ import sbt.Keys._
 import sbt._
 import sbt.internal.PluginManagement.PluginClassLoader
 import sbt.internal.inc.classpath.ClasspathUtilities
-import swagger.meta.Versions
 import scala.collection.JavaConverters._
 
 object SbtSwaggerMeta extends AutoPlugin {

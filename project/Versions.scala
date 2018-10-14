@@ -14,7 +14,7 @@ object Versions {
   }
 
   private def createVersionsFile(base: File, swaggerCoreVersion: String): Seq[File] = {
-    val output = base / "swagger" / "meta" / "Versions.scala"
+    val output = base / "sbtswaggermeta" / "Versions.scala"
 
     val versionsBody =
       s"""/**
@@ -22,7 +22,7 @@ object Versions {
          |  * So you must not edit this file.
          |  */
          |
-         |package swagger.meta
+         |package sbtswaggermeta
          |
          |object Versions {
          |  val swaggerCoreVersion: String = "$swaggerCoreVersion"
