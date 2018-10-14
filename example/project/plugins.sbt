@@ -1,3 +1,3 @@
 resolvers += Resolver.bintrayRepo("yyu", "sbt-plugins")
 
-addSbtPlugin("com.github.y-yu" % "sbt-swagger-meta" % "0.1.0_SNAPSHOT")
+addSbtPlugin("com.github.y-yu" % "sbt-swagger-meta" % "0.1.0")

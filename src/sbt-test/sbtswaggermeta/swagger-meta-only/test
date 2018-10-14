@@ -1,0 +1,9 @@
+> swaggerMetaOnly a.*
+
+$ exists target/swagger.yml
+
+> check
+
+> swaggerMetaOnly .*
+
+-> check
