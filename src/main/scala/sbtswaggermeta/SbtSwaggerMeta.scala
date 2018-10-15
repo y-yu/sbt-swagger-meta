@@ -9,15 +9,13 @@ import sbt.complete.DefaultParsers._
 import org.clapper.classutil.ClassFinder
 import sbt.Keys._
 import sbt._
-import sbt.internal.PluginManagement.PluginClassLoader
-import sbt.internal.inc.classpath.ClasspathUtilities
 import scala.collection.JavaConverters._
 
 object SbtSwaggerMeta extends AutoPlugin {
   case class SwaggerInfo(
     version: String,
     title: String,
-    description: String,
+    description: String
   )
 
   trait SwaggerOutputFileType {
@@ -51,7 +49,7 @@ object SbtSwaggerMeta extends AutoPlugin {
   private val defaultSwaggerInfo = SwaggerInfo(
     version = "2.0",
     title = "API docs",
-    description = "",
+    description = ""
   )
 
   override def trigger: PluginTrigger = noTrigger
@@ -59,7 +57,7 @@ object SbtSwaggerMeta extends AutoPlugin {
   override val projectSettings: Seq[Setting[_]] = Seq(
     libraryDependencies ++= Seq(
       "io.swagger" % "swagger-core" % Versions.swaggerCoreVersion,
-      "io.swagger" % "swagger-jaxrs" % Versions.swaggerCoreVersion,
+      "io.swagger" % "swagger-jaxrs" % Versions.swaggerCoreVersion
     ),
     swaggerBasePath := "http://localhost/",
     swaggerOutputFileType := Yaml,
@@ -93,8 +91,8 @@ object SbtSwaggerMeta extends AutoPlugin {
       case None => (swaggerTargetClasspath in Compile).value
     }
 
-    val mainClassLoader = ClasspathUtilities.makeLoader(fullClasspath.map(_.data), classOf[Api].getClassLoader, scalaInstanceInCompile)
-    val pluginClassLoader = new PluginClassLoader(mainClassLoader)
+    val mainClassLoader = Internal.makeLoader(fullClasspath.map(_.data), classOf[Api].getClassLoader, scalaInstanceInCompile)
+    val pluginClassLoader = Internal.makePluginClassLoader(mainClassLoader)
 
     pluginClassLoader.add(fullClasspath.files.map(_.toURI.toURL))
 

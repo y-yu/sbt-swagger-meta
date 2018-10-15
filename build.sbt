@@ -6,8 +6,9 @@ lazy val root = (project in file(".")).
     name := "sbt-swagger-meta",
     // Bintray cannot allow a version which has `-SNAPSHOT` as its postfix,
     // so I will use the postfix of the version is `_SNAPSHOT`.
-    version := "0.1.2",
+    version := "0.1.3",
     scalaVersion := "2.12.7",
+    crossSbtVersions := Seq("0.13.17", "1.2.4"),
     libraryDependencies ++= Seq(
       "io.swagger" % "swagger-core" % Versions.swagger.core,
       "io.swagger" % "swagger-jaxrs" % Versions.swagger.core,

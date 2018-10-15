@@ -11,14 +11,22 @@ cache:
 scala:
   - 2.12.7
 
-jdk: oraclejdk8
+matrix:
+  include:
+  - env: SBT_VERSION="0.13.17"
+    jdk: oraclejdk8
+  - env: SBT_VERSION="1.2.4"
+    jdk: oraclejdk8
 
 script:
-  - sbt scripted publishLocal
+  - sbt "^^ ${SBT_VERSION}" scripted
+
   # Check that the example can be compiled.
-  - cd example
-  - sbt swaggerMeta
-  - cat target/swagger.yml
+  - if [[ "${SBT_VERSION}" == "1.2.4" ]]; then
+      cd example;
+      sbt swaggerMeta;
+      cat target/swagger.yml;
+    fi
 
 before_cache:
   - find $HOME/.sbt -name "*.lock" | xargs rm
