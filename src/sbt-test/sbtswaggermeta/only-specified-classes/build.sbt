@@ -6,6 +6,8 @@ swaggerOutputFileType := Yaml
 
 swaggerTargetClasspath := "a\\..*"
 
+enablePlugins(SbtSwaggerMeta)
+
 TaskKey[Unit]("check") := {
   val body = IO.read(file("target/swagger.yml"))
 

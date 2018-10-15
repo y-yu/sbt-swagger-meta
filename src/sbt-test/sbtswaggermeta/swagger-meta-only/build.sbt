@@ -4,6 +4,8 @@ scalaVersion := "2.12.7"
 
 swaggerOutputFileType := Yaml
 
+enablePlugins(SbtSwaggerMeta)
+
 TaskKey[Unit]("check") := {
   val body = IO.read(file("target/swagger.yml"))
 

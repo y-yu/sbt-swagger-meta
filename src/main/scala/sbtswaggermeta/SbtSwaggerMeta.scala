@@ -54,7 +54,7 @@ object SbtSwaggerMeta extends AutoPlugin {
     description = "",
   )
 
-  override def trigger: PluginTrigger = allRequirements
+  override def trigger: PluginTrigger = noTrigger
 
   override val projectSettings: Seq[Setting[_]] = Seq(
     libraryDependencies ++= Seq(
