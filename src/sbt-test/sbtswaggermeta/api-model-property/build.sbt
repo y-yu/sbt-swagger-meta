@@ -2,9 +2,8 @@ import sbtswaggermeta.SbtSwaggerMeta.{Json => JsonType}
 
 scalaVersion := "2.12.7"
 
-libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.10"
 
-enablePlugins(SbtSwaggerMeta, SbtJsonPlugin)
+enablePlugins(SbtSwaggerMeta)
 
 swaggerOutputFileType := JsonType
 

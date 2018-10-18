@@ -4,4 +4,4 @@ sys.props.get("plugin.version") match {
                          |Specify this property using the scriptedLaunchOpts -D.""".stripMargin)
 }
 
-addSbtPlugin("com.github.battermann" % "sbt-json" % "0.5.0")
+libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.10"
