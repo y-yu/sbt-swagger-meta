@@ -1,3 +1,3 @@
-resolvers += Resolver.bintrayRepo("yyu", "sbt-plugins")
+lazy val root = Project("plugins", file(".")) dependsOn sbtSwaggerMeta
 
-addSbtPlugin("com.github.y-yu" % "sbt-swagger-meta" % "0.1.3")
+lazy val sbtSwaggerMeta = ClasspathDependency(RootProject(file("..").getAbsoluteFile.toURI), None)

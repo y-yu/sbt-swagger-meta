@@ -1,0 +1,5 @@
+> swaggerMeta
+
+$ exists target/swagger.json
+
+> check

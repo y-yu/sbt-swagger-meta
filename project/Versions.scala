@@ -4,17 +4,14 @@ import sbt._
 object Versions {
   val swagger = new {
     val core = "1.5.21"
+    val scalaModule = "1.0.4"
   }
   val classutil = "1.3.0"
 
-  val createVersionsFileTask: Def.Initialize[Task[Seq[File]]] = Def.task {
-    val srcManaged = (sourceManaged in Compile).value
+  val jacksonModuleScala = "2.9.5"
 
-    createVersionsFile(srcManaged, swagger.core)
-  }
-
-  private def createVersionsFile(base: File, swaggerCoreVersion: String): Seq[File] = {
-    val output = base / "sbtswaggermeta" / "Versions.scala"
+  lazy val createVersionsFileTask: Def.Initialize[Task[Seq[File]]] = Def.task {
+    val output = (sourceManaged in Compile).value / "sbtswaggermeta" / "Versions.scala"
 
     val versionsBody =
       s"""/**
@@ -25,7 +22,7 @@ object Versions {
          |package sbtswaggermeta
          |
          |object Versions {
-         |  val swaggerCoreVersion: String = "$swaggerCoreVersion"
+         |  val swaggerCoreVersion: String = "${swagger.core}"
          |}
          |""".stripMargin
 

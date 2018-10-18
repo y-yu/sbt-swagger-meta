@@ -2,6 +2,7 @@ package sbtswaggermeta
 
 import io.swagger.annotations.Api
 import io.swagger.jaxrs.Reader
+import io.swagger.converter.ModelConverters
 import io.swagger.models.{Info, Swagger}
 import io.swagger.util.{Json => UtilJson, Yaml => UtilYaml}
 import sbt.complete.Parser
@@ -118,6 +119,9 @@ object SbtSwaggerMeta extends AutoPlugin {
     info.setDescription(swaggerInfo.description)
 
     val reader = new Reader(new Swagger().info(info))
+
+    ModelConverters.getInstance().addConverter(new SwaggerScalaModelConverterWithYaml)
+
     val swagger = reader.read(projectClasses.toSet.asJava)
 
     val body = outputFileType match {
