@@ -8,7 +8,20 @@ This is a sbt plugin to generate a [Swagger](https://swagger.io/) YAML/JSON file
 
 ## How to Use
 
-See `./example` and `./src/sbt-test` directories.
+1. `./project/plugins.sbt`
+
+    ```
+    resolvers += Resolver.bintrayRepo("yyu", "sbt-plugins")
+    
+    addSbtPlugin("com.github.y-yu" % "sbt-swagger-meta" % "0.1.4")
+    ```
+2. `build.sbt`
+
+    ```
+    enablePlugins(SbtSwaggerMeta)
+    ```
+
+See also `./example` and `./src/sbt-test` directories.
 
 ## License
 
