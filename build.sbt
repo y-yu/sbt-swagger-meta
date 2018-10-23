@@ -9,7 +9,14 @@ lazy val root = (project in file(".")).
     homepage := Some(url("https://github.com/y-yu")),
     licenses := Seq("MIT" -> url(s"https://github.com/y-yu/sbt-swagger-meta/blob/master/LICENSE")),
     scalaVersion := "2.12.7",
-    crossSbtVersions := Seq("0.13.17", "1.2.4"),
+    scalacOptions ++= Seq(
+      "-deprecation",
+      "-encoding", "UTF-8",
+      "-Xlint",
+      "-language:implicitConversions", "-language:higherKinds", "-language:existentials",
+      "-unchecked"
+    ),
+    crossSbtVersions := Seq("0.13.17", "1.2.6"),
     libraryDependencies ++= Seq(
       "io.swagger" % "swagger-core" % Versions.swagger.core,
       "io.swagger" % "swagger-jaxrs" % Versions.swagger.core,

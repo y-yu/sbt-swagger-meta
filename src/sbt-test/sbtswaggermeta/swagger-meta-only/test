@@ -9,3 +9,5 @@ $ exists target/swagger.yml
 -> check
 
 -> swaggerMetaOnly
+
+> swaggerMetaOnly com.github.y-yu.example.SwaggerMeta

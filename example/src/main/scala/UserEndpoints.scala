@@ -32,6 +32,6 @@ object Response {
   ) extends Response
 
   case class NotFound(
-    @(ApiModelProperty @field)(value = "error message") msg: String
+    @(ApiModelProperty @field)(value = "error messages") msg: Seq[String]
   ) extends Response
 }

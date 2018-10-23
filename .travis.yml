@@ -13,16 +13,16 @@ scala:
 
 matrix:
   include:
-  - env: SBT_VERSION="0.13.17"
+  - env: SBT_VERSION="0.13.17" EXAMPLE_BUILD="false"
     jdk: oraclejdk8
-  - env: SBT_VERSION="1.2.4"
+  - env: SBT_VERSION="1.2.6" EXAMPLE_BUILD="true"
     jdk: oraclejdk8
 
 script:
   - sbt "^^ ${SBT_VERSION}" scripted
 
   # Check that the example can be compiled.
-  - if [[ "${SBT_VERSION}" == "1.2.4" ]]; then
+  - if [[ "${EXAMPLE_BUILD}" == "true" ]]; then
       cd example;
       sbt swaggerMeta;
       cat target/swagger.yml;
