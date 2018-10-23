@@ -75,7 +75,7 @@ object SbtSwaggerMeta extends AutoPlugin {
   )
 
   lazy val argsParser: Parser[String] =
-    ((Space.* ~> StringBasic).+ <~ SpaceClass.*) map { args =>
+    ((Space ~> StringBasic).+ <~ SpaceClass.*) map { args =>
       s"(${args.mkString("|")})"
     }
 
