@@ -1,4 +1,5 @@
 import ReleaseTransformations._
+import UpdateReadme.updateReadme
 
 lazy val root = (project in file(".")).
   settings(
@@ -66,10 +67,12 @@ lazy val publishSettings = Seq(
     runClean,
     releaseStepCommandAndRemaining("^ scripted"),
     setReleaseVersion,
+    updateReadme,
     commitReleaseVersion,
     tagRelease,
     releaseStepCommandAndRemaining("^ publishSigned"),
     setNextVersion,
+    updateReadme,
     commitNextVersion,
     releaseStepCommand("sonatypeReleaseAll"),
     pushChanges
