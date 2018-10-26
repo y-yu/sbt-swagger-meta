@@ -8,7 +8,9 @@ object Versions {
   }
   val classutil = "1.3.0"
 
-  val jacksonModuleScala = "2.9.5"
+  val jacksonModuleScala = "2.9.6"
+
+  val json4s = "3.6.1"
 
   lazy val createVersionsFileTask: Def.Initialize[Task[Seq[File]]] = Def.task {
     val output = (sourceManaged in Compile).value / "sbtswaggermeta" / "Versions.scala"

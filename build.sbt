@@ -26,7 +26,8 @@ lazy val root = (project in file(".")).
         ExclusionRule("com.fasterxml.jackson.module", "jackson-module-scala")
       ),
       "org.clapper" %% "classutil" % Versions.classutil,
-      "com.fasterxml.jackson.module" %% "jackson-module-scala" % Versions.jacksonModuleScala
+      "com.fasterxml.jackson.module" %% "jackson-module-scala" % Versions.jacksonModuleScala,
+      "org.json4s" %% "json4s-jackson" % Versions.json4s
     ),
     sourceGenerators in Compile += Versions.createVersionsFileTask.taskValue,
     scriptedLaunchOpts := { scriptedLaunchOpts.value ++
