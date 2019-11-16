@@ -3,7 +3,7 @@ import sbt._
 
 object Versions {
   val swagger = new {
-    val core = "1.5.21"
+    val core = "1.5.24"
     val scalaModule = "1.0.4"
   }
   val classutil = "1.3.0"

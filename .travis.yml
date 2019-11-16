@@ -8,15 +8,10 @@ cache:
     - $HOME/.sbt/boot
     - $HOME/.sbt/launchers
 
-scala:
-  - 2.12.7
-
 matrix:
   include:
-  - env: SBT_VERSION="0.13.17" EXAMPLE_BUILD="false"
-    jdk: oraclejdk8
-  - env: SBT_VERSION="1.2.6" EXAMPLE_BUILD="true"
-    jdk: oraclejdk8
+    - env: SBT_VERSION="0.13.18" EXAMPLE_BUILD="false"
+    - env: SBT_VERSION="1.3.3" EXAMPLE_BUILD="true"
 
 script:
   - sbt "^^ ${SBT_VERSION}" scripted

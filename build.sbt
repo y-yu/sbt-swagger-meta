@@ -9,7 +9,6 @@ lazy val root = (project in file(".")).
     description := "A sbt plugin for generating a Swagger documentation",
     homepage := Some(url("https://github.com/y-yu")),
     licenses := Seq("MIT" -> url(s"https://github.com/y-yu/sbt-swagger-meta/blob/master/LICENSE")),
-    scalaVersion := "2.12.7",
     scalacOptions ++= Seq(
       "-deprecation",
       "-encoding", "UTF-8",
@@ -17,7 +16,7 @@ lazy val root = (project in file(".")).
       "-language:implicitConversions", "-language:higherKinds", "-language:existentials",
       "-unchecked"
     ),
-    crossSbtVersions := Seq("0.13.17", "1.2.6"),
+    crossSbtVersions := Seq("0.13.18", "1.3.3"),
     libraryDependencies ++= Seq(
       "io.swagger" % "swagger-core" % Versions.swagger.core,
       "io.swagger" % "swagger-jaxrs" % Versions.swagger.core,

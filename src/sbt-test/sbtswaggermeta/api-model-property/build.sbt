@@ -1,8 +1,5 @@
 import sbtswaggermeta.SbtSwaggerMeta.{Json => JsonType}
 
-scalaVersion := "2.12.7"
-
-
 enablePlugins(SbtSwaggerMeta)
 
 swaggerOutputFileType := JsonType
