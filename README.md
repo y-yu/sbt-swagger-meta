@@ -15,7 +15,7 @@ This is a sbt plugin to generate a [Swagger](https://swagger.io/) YAML/JSON file
     ```
     - if you want to use a SNAPSHOT version, you write following.
         ```
-        addSbtPlugin("com.github.y-yu" % "sbt-swagger-meta" % "0.1.8-SNAPSHOT")
+        addSbtPlugin(com.github.y-yu" % "sbt-swagger-meta" % "0.2.1-SNAPSHOT")
         ```
     
 2. `build.sbt`
