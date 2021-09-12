@@ -6,7 +6,7 @@ object Versions {
     val core = "1.5.21"
     val scalaModule = "1.0.4"
   }
-  val classutil = "1.3.0"
+  val classutil = "1.5.1"
 
   val jacksonModuleScala = "2.9.6"
 
