@@ -63,14 +63,14 @@ object SbtSwaggerMeta extends AutoPlugin {
     swaggerBasePath := "http://localhost/",
     swaggerOutputFileType := Yaml,
     swaggerTarget :=
-      (baseDirectory in Compile).value / "target" / s"swagger.${(swaggerOutputFileType in Compile).value.ext}",
+      (Compile / baseDirectory).value / "target" / s"swagger.${(Compile / swaggerOutputFileType).value.ext}",
     swaggerTargetClasspath := ".*",
     swaggerInformation := defaultSwaggerInfo,
-    swaggerMeta := swaggerMetaTask(None).dependsOn(compile in Compile).value,
+    swaggerMeta := swaggerMetaTask(None).dependsOn(Compile / compile).value,
     swaggerMetaOnly := Def.inputTaskDyn {
       val targetClasspath = argsParser.parsed
 
-      swaggerMetaTask(Some(targetClasspath)).dependsOn(compile in Compile)
+      swaggerMetaTask(Some(targetClasspath)).dependsOn(Compile / compile)
     }.evaluated
   )
 
@@ -80,16 +80,16 @@ object SbtSwaggerMeta extends AutoPlugin {
     }
 
   def swaggerMetaTask(targetClasspathOpt: Option[String]): Def.Initialize[Task[Unit]] = Def.task {
-    val fullClasspath = (sbt.Keys.fullClasspath in Compile).value
-    val classDirectory = (sbt.Keys.classDirectory in Compile).value
-    val targetFile = (swaggerTarget in Compile).value
-    val outputFileType = (swaggerOutputFileType in Compile).value
-    val swaggerInfo = (swaggerInformation in Compile).value
-    val scalaInstanceInCompile = (scalaInstance in Compile).value
+    val fullClasspath = (Compile / sbt.Keys.fullClasspath).value
+    val classDirectory = (Compile / sbt.Keys.classDirectory).value
+    val targetFile = (Compile / swaggerTarget).value
+    val outputFileType = (Compile / swaggerOutputFileType).value
+    val swaggerInfo = (Compile / swaggerInformation).value
+    val scalaInstanceInCompile = (Compile / scalaInstance).value
     val log = sbt.Keys.streams.value.log
     val targetClasspath = targetClasspathOpt match {
       case Some(t) => t
-      case None => (swaggerTargetClasspath in Compile).value
+      case None => (Compile / swaggerTargetClasspath).value
     }
 
     val mainClassLoader = Internal.makeLoader(fullClasspath.map(_.data), classOf[Api].getClassLoader, scalaInstanceInCompile)

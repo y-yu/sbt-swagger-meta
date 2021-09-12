@@ -1,0 +1,27 @@
+name: CI
+on:
+  pull_request:
+  push:
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ 8, 11 ]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: ${{ matrix.java }}
+      - uses: coursier/cache-action@v5
+      - name: Test
+        run: ./sbt "^ scripted"
+      - name: Run examples
+        run: |
+          # Check that the example can be compiled.
+          if [[ "${EXAMPLE_BUILD}" == "true" ]]; then
+            cd example
+            sbt swaggerMeta
+            cat target/swagger.yml
+          fi

@@ -1,7 +1,7 @@
 sbt-swagger-meta
 ============================
 
-[![Build Status](https://travis-ci.org/y-yu/sbt-swagger-meta.svg?branch=master)](https://travis-ci.org/y-yu/sbt-swagger-meta)
+[![CI](https://github.com/y-yu/sbt-swagger-meta/actions/workflows/ci.yml/badge.svg)](https://github.com/y-yu/sbt-swagger-meta/actions/workflows/ci.yml)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.y-yu/sbt-swagger-meta/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.y-yu/sbt-swagger-meta)
 
 This is a sbt plugin to generate a [Swagger](https://swagger.io/) YAML/JSON file based on annotations.

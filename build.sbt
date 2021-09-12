@@ -9,7 +9,6 @@ lazy val root = (project in file(".")).
     description := "A sbt plugin for generating a Swagger documentation",
     homepage := Some(url("https://github.com/y-yu")),
     licenses := Seq("MIT" -> url(s"https://github.com/y-yu/sbt-swagger-meta/blob/master/LICENSE")),
-    scalaVersion := "2.12.7",
     scalacOptions ++= Seq(
       "-deprecation",
       "-encoding", "UTF-8",
@@ -17,19 +16,20 @@ lazy val root = (project in file(".")).
       "-language:implicitConversions", "-language:higherKinds", "-language:existentials",
       "-unchecked"
     ),
-    crossSbtVersions := Seq("0.13.17", "1.2.6"),
+    crossSbtVersions := Seq("1.5.5"),
     libraryDependencies ++= Seq(
+      "javax.xml.bind" % "jaxb-api" % Versions.jaxbApi,
       "io.swagger" % "swagger-core" % Versions.swagger.core,
       "io.swagger" % "swagger-jaxrs" % Versions.swagger.core,
       "io.swagger" %% "swagger-scala-module" % Versions.swagger.scalaModule excludeAll(
         ExclusionRule("io.swagger", "swagger-core"),
         ExclusionRule("com.fasterxml.jackson.module", "jackson-module-scala")
       ),
-      "org.clapper" %% "classutil" % Versions.classutil,
+      "org.clapper" %% "classutil" % Versions.classUtil,
       "com.fasterxml.jackson.module" %% "jackson-module-scala" % Versions.jacksonModuleScala,
       "org.json4s" %% "json4s-jackson" % Versions.json4s
     ),
-    sourceGenerators in Compile += Versions.createVersionsFileTask.taskValue,
+    Compile / sourceGenerators += Versions.createVersionsFileTask.taskValue,
     scriptedLaunchOpts := { scriptedLaunchOpts.value ++
       Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
     },
@@ -46,7 +46,7 @@ lazy val publishSettings = Seq(
     else
       Opts.resolver.sonatypeStaging
   ),
-  publishArtifact in Test := false,
+  Test / publishArtifact := false,
   pomExtra :=
     <developers>
       <developer>
@@ -81,7 +81,7 @@ lazy val publishSettings = Seq(
 )
 
 val tagName = Def.setting {
-  s"v${if (releaseUseGlobalVersion.value) (version in ThisBuild).value else version.value}"
+  s"v${if (releaseUseGlobalVersion.value) (ThisBuild / version).value else version.value}"
 }
 
 val tagOrHash = Def.setting {
