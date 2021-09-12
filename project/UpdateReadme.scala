@@ -26,7 +26,7 @@ object UpdateReadme {
 
     val git = new Git(baseDir)
     git.add(readmeFile.getName) ! state.log
-    git.commit(message = "Update " + readmeFile.getName, sign = false) ! state.log
+    git.commit(message = "Update " + readmeFile.getName, sign = false, signOff = false) ! state.log
     
     state
   }
